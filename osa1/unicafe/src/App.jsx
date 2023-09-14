@@ -8,6 +8,12 @@ const Button = (props) => (
   <button onClick={props.handleClick}>{props.text}</button>
 )
 
+const StatisticLine = (props) => {
+  return (
+    <p>{props.text} {props.value}</p>
+  )
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0);
@@ -27,7 +33,6 @@ const App = () => {
       <Button HandleClick={() => setNeutral(neutral + 1)} text="Neutral"/>
       <Button HandleClick={() => setBad(bad + 1)} text="Bad"/>
 
-      <h1>Statistics</h1>
 
     </div>
   )
