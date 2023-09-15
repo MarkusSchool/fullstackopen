@@ -19,13 +19,14 @@ const Content = ({ courseparts }) => {
     courseparts.map((part => console.log(part.name))) // get all part names
     return (
         <div>
-   
+
         </div>
     )
 }
 
 const Total = ({ courseparts }) => {
-    //console.log(courseparts[0].exercises)
+    const totalExercises = courseparts.reduce((total, part) => total + part.exercises, 0);
+    console.log('total exercises:', totalExercises)
 }
 
 const Course = ({ course }) => {
