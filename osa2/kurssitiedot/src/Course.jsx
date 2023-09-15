@@ -16,7 +16,7 @@ const Content = ({ courseparts }) => {
     return (
         <div>
             {courseparts.map((part) => (
-                <Part key={part.id} part={part} />
+                <Part key={part.id} part={part}/>
             ))}
         </div>
     );
@@ -32,9 +32,9 @@ const Total = ({ courseparts }) => {
 const Course = ({ course }) => {
     return (
         <div>
-            <Header coursename={course.name} />
-            <Content courseparts={course.parts} />
-            <Total courseparts={course.parts} />
+            <Header coursename={course.name}/>
+            <Content courseparts={course.parts}/>
+            <Total courseparts={course.parts}/>
         </div>
     );
 }
