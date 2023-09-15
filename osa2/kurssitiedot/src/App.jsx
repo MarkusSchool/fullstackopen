@@ -1,6 +1,7 @@
 import Course from './Course.jsx'
 
 const App = () => {
+  
   const course = {
     name: 'Half Stack application development',
     id: 1,
