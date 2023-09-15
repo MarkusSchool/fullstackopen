@@ -1,10 +1,14 @@
+const Header = ({coursename}) => {
+    return (
+        <h1>{coursename}</h1>
+    )
+}
+
 const Course = ({ course }) => {
-    console.log(course.parts[1])
+    console.log(course.name)
     return (
         <div>
-            <h1>
-                {course.parts[1].name}
-            </h1>
+            <Header coursename={course.name}/>
         </div>
     )
 }
