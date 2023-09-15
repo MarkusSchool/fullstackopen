@@ -1,43 +1,42 @@
 const Header = ({ coursename }) => {
     return (
         <h1>{coursename}</h1>
-    )
+    );
 }
 
-const Part = (props) => {
-
+const Part = ({ part }) => {
     return (
         <p>
-            {props.part.name} {props.part.exercises}
+            {part.name} {part.exercises}
         </p>
-    )
-
+    );
 }
 
 const Content = ({ courseparts }) => {
-    console.log(courseparts)
-    courseparts.map((part => console.log(part.name))) // get all part names
     return (
         <div>
-
+            {courseparts.map((part) => (
+                <Part key={part.id} part={part} />
+            ))}
         </div>
-    )
+    );
 }
 
 const Total = ({ courseparts }) => {
     const totalExercises = courseparts.reduce((total, part) => total + part.exercises, 0);
-    console.log('total exercises:', totalExercises)
+    return (
+        <p>Total of {totalExercises} exercises</p>
+    );
 }
 
 const Course = ({ course }) => {
-    console.log(course.name)
     return (
         <div>
             <Header coursename={course.name} />
             <Content courseparts={course.parts} />
             <Total courseparts={course.parts} />
         </div>
-    )
+    );
 }
 
-export default Course
+export default Course;
