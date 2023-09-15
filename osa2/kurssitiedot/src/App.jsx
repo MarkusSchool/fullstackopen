@@ -1,3 +1,5 @@
+import Course from './Course.jsx'
+
 const App = () => {
   const course = {
     name: 'Half Stack application development',
@@ -10,7 +12,7 @@ const App = () => {
       },
       {
         name: 'Using props to pass data',
-        exercises: 7,
+        exercises: 7, 
         id: 2
       },
       {
@@ -23,13 +25,9 @@ const App = () => {
 
   return (
     <div>
-     <h1>
-      moi
-     </h1>
+      <Course course={course} />
     </div>
   )
 }
-
-//  <Course course={course} />
 
 export default App
