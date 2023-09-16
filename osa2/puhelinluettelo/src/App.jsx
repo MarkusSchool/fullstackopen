@@ -11,9 +11,9 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   useEffect(() => {
     personsDataBase.getPersons().then(response => {
-        console.log(response)
-        setPersons(response)
-      })
+      console.log(response)
+      setPersons(response)
+    })
   }, [])
 
   const [filter, setFilter] = useState('');
@@ -38,11 +38,13 @@ const App = () => {
       return;
     }
 
-    setPersons(persons.concat(personObject));
-    setNewName('');
-    setNewNumber('');
+    personsDataBase.createPerson(personObject).then(response => {
+      setPersons(persons.concat(response));
+      setNewName('');
+      setNewNumber('');
+      console.log(persons);
+    })
 
-    console.log(persons);
   };
 
   const handleFilterChange = (event) => {

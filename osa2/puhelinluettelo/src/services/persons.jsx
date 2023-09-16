@@ -18,8 +18,9 @@ const updatePerson = (id, newObject) => {
 
 // käytä jotain muuta muuttujan nimeä
 const deletePerson = (id) => {
-    // ...
-  }
+    const request = axios.delete(`${baseUrl}/${id}`, newObject)
+    return request.then(response => response.data)
+}
 
 export default {
     getPersons,
