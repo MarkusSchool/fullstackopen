@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PersonForm from './components/PersonForm';
-import Filter from './components/Filter'
+import Filter from './components/Filter';
 import Persons from './components/Persons';
 
-import personsDataBase from './services/persons'
+import personsDataBase from './services/persons';
 
 const App = () => {
-
   const [persons, setPersons] = useState([]);
   useEffect(() => {
-    personsDataBase.getPersons().then(response => {
-      console.log(response)
-      setPersons(response)
-    })
-  }, [])
+    personsDataBase.getPersons().then((response) => {
+      console.log(response);
+      setPersons(response);
+    });
+  }, []);
 
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
@@ -21,36 +20,41 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
-
+  
     const personObject = {
       name: newName.trim(),
-      number: newNumber.trim()
+      number: newNumber.trim(),
     };
-
+  
     const normalizedNewName = newName.trim().toLowerCase();
-
-    const personAdded = persons.some((person) => person.name.toLowerCase() === normalizedNewName);
-    const numberAdded = persons.some((person) => person.number === newNumber.trim());
-
+  
+    const personAdded = persons.some(
+      (person) => person.name.toLowerCase() === normalizedNewName
+    );
+    const numberAdded = persons.some(
+      (person) => person.number === newNumber.trim()
+    );
+  
     if (personAdded && numberAdded) {
-      alert(`${newName} is already added to phonebook`);
+      alert(`${newName} is already added to the phonebook`);
       return;
     }
-
-    personsDataBase.createPerson(personObject).then(response => {
+  
+    personsDataBase.createPerson(personObject).then((response) => {
       setPersons(persons.concat(response));
       setNewName('');
       setNewNumber('');
       console.log(persons);
-    })
-
-  };
+    });
+  };  
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value.trim().toLowerCase());
   };
 
-  const filteredPersons = persons.filter((person) => person.name.toLowerCase().includes(filter.toLowerCase()));
+  const filteredPersons = persons.filter((person) =>
+    person.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -60,21 +64,34 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const handleDeleting = (id) => {
+    const personToDelete = persons.find((person) => person.id === id);
+
+    if (personToDelete && window.confirm(`Delete ${personToDelete.name} ?`)) {
+
+      personsDataBase.deletePerson(id).then(() => {
+        setPersons(persons.filter(person => person.id!== id))
+      })
+
+      .catch (error => {
+        console.log(error)
+      })
+
+    }
+  };
+
   return (
     <div>
-
       <h2>Phonebook</h2>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
       <h3>Add a new</h3>
-      <PersonForm newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson} />
+      <PersonForm newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson}/>
 
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} />
-
+      <Persons persons={filteredPersons} handleDeleting={handleDeleting} />
     </div>
   );
-
 };
 
 export default App;
