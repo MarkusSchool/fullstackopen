@@ -1,8 +1,8 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "1",
+      "name": "arto hellas",
+      "number": "2",
       "id": 1
     },
     {
@@ -16,19 +16,9 @@
       "id": 3
     },
     {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
+      "name": "jorma",
+      "number": "434",
       "id": 4
-    },
-    {
-      "name": "jorma reino",
-      "number": "040-1234568",
-      "id": 5
-    },
-    {
-      "name": "jamina eestiläine",
-      "number": "41",
-      "id": 6
     }
   ]
 }
