@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter'
 import Persons from './components/Persons';
@@ -10,6 +12,9 @@ const App = () => {
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]);
+
+  const promise = axios.get('http://localhost:3001/persons')
+  console.log(promise)
 
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
@@ -56,7 +61,7 @@ const App = () => {
 
   return (
     <div>
-      
+
       <h2>Phonebook</h2>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
