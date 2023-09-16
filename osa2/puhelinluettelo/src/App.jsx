@@ -10,16 +10,11 @@ const App = () => {
 
   const [persons, setPersons] = useState([]);
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log(response.data)
-        setPersons(response.data);
+    personsDataBase.getPersons().then(response => {
+        console.log(response)
+        setPersons(response)
       })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  }, [])
 
   const [filter, setFilter] = useState('');
   const [newName, setNewName] = useState('');
@@ -71,8 +66,8 @@ const App = () => {
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
       <h3>Add a new</h3>
-      <PersonForm newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson}/>
-      
+      <PersonForm newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange} addPerson={addPerson} />
+
       <h3>Numbers</h3>
       <Persons persons={filteredPersons} />
 
