@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import getCountries from './services/getCountries';
+import { ShowInfo, ShowResults } from './components/CountryInfo';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [countries, setCountries] = useState([]);
+  const [newMaaHaku, setNewMaaHaku] = useState("");
+  const [maaHakuResults, setMaaHakuResults] = useState([]);
+  const [valittuMaa, setValittuMaa] = useState(null);
+
+  useEffect(() => {
+    getCountries
+      .GetCountries()
+      .then(response => {
+        setCountries(response);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (newMaaHaku && countries.length > 0) {
+      const regex = new RegExp(newMaaHaku.trim(), 'i');
+      setMaaHakuResults(countries.filter(country => regex.test(country.name.common)));
+    }
+  }, [newMaaHaku]);
+
+  const handleMaaHakuChange = (event) => {
+    event.preventDefault();
+    setNewMaaHaku(event.target.value);
+    setValittuMaa(null);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <form>find countries: <input value={newMaaHaku} onChange={handleMaaHakuChange} /></form>
+      {(() => {
+      switch (true) {
+        case Boolean(valittuMaa):
+          return <ShowInfo country={valittuMaa} />;
+        case maaHakuResults.length === 1:
+          return <ShowInfo country={maaHakuResults[0]} />;
+        case maaHakuResults.length > 10:
+          return <p>too many matches, specify another filter</p>;
+        default:
+          return <ShowResults countries={maaHakuResults} selectionHandler={setValittuMaa} />;
+      }
+    })()}
+    </div>
+  );
+};
 
-export default App
+export default App;

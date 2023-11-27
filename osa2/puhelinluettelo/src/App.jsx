@@ -21,7 +21,7 @@ const App = () => {
 
     const personObject = {
       name: newName.trim(),
-      number: newNumber.trim(),
+      number: newNumber.trim(), 
     };
 
     const normalizedNewName = newName.trim().toLowerCase();
